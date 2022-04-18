@@ -18,23 +18,23 @@
                     @foreach ($checklist->tasks->where('user_id', null) as $index => $task)
                         <tr>
                             <td>
-                                <input wire:click="complete_task({{ $task->id }})" type="radio"
-                                    @if (in_array($task->id, $completed_tasks)) checked  disabled @endif>
+                                <input wire:click="complete_task({{ $task->id }})" type="checkbox"
+                                    @if (in_array($task->id, $completed_tasks)) checked  @endif>
                             </td>
                             <td>
-                                <a wire:click.prevent="toggle_task({{ $task->id }})"
-                                    href="#">{{ $task->name }}</a>
+                                <a wire:click.prevent="toggle_task({{ $task->id }})" href="#"
+                                    class="@if (in_array($task->id, $completed_tasks)) done @endif">{{ $task->name }}</a>
                             </td>
                             <td wire:click="toggle_task({{ $task->id }})">
                                 @if (in_array($task->id, $opened_tasks))
-                                    <i class="fas fa-angle-up"></i>
+                                    <i class="fas fa-angle-up pointer"></i>
                                 @else
-                                    <i class="fas fa-angle-down"></i>
+                                    <i class="fas fa-angle-down pointer"></i>
                                 @endif
                             </td>
                         </tr>
                         @if (in_array($task->id, $opened_tasks))
-                            <tr class="shadow" style="z-index: 99">
+                            <tr class="shadow expand" style="z-index: 99">
                                 <td></td>
                                 <td colspan="2">{!! $task->description !!}</td>
                             </tr>
@@ -47,4 +47,17 @@
             {{-- {{ $checklist->tasks->links() }} --}}
         </div>
     </div>
+    <style>
+        .done,
+        .done:hover,
+        .done:focus,
+        .done:active {
+            text-decoration: line-through;
+            color: #6c7d73;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+    </style>
 </div>

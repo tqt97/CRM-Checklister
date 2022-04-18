@@ -28,6 +28,24 @@
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat1 nav-child-indent1" data-widget="treeview"
                 role="menu" data-accordion="false">
                 @if (auth()->user()->is_admin)
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-sun"></i>
+                            <p> My day </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-star"></i>
+                            <p> Important</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-alt"></i>
+                            <p>Planed </p>
+                        </a>
+                    </li>
                     <li class="nav-header"> {{ __(' Manage Checklists') }} </li>
                     @foreach ($admin_menu as $group)
                         <li class="nav-item menu-open">

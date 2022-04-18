@@ -17,7 +17,6 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth','save_last_action_timestamp']], function () {
 
-
     Route::get('welcome', [WelcomePageController::class, 'welcome'])->name('welcome');
     Route::get('consultation', [WelcomePageController::class, 'consultation'])->name('consultation');
     Route::get('checklists/{checklist}', [UserChecklistController::class, 'show'])->name('user.checklists.show');

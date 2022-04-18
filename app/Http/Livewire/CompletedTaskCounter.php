@@ -14,10 +14,10 @@ class CompletedTaskCounter extends Component
         'task_completed' => 'recalculate_tasks',
     ];
 
-    public function recalculate_tasks($task_id, $checklist_id)
+    public function recalculate_tasks($task_id, $checklist_id, $count_change = 1)
     {
         if ($checklist_id == $this->checklist_id) {
-            $this->completed_tasks++;
+            $this->completed_tasks += $count_change;
         }
     }
 
