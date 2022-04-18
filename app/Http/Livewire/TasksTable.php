@@ -12,11 +12,6 @@ class TasksTable extends Component
     public $checklist;
     protected $paginationTheme = 'bootstrap';
 
-    // public function mount($checklist)
-    // {
-    //     $this->checklist = $checklist;
-    // }
-
     public function updateTaskOrder($tasks)
     {
         foreach ($tasks as $task) {
@@ -24,9 +19,26 @@ class TasksTable extends Component
         }
     }
 
+    public function task_up($task_id)
+    {
+        $task = Task::find($task_id);
+        if ($task) {
+            Task::whereNull('user_id')->where('position', $task->position - 1)->where('checklist_id', $task->checklist_id)->update(['position' => $task->position]);
+            $task->update(['position' => $task->position - 1]);
+        }
+    }
+    public function task_down($task_id)
+    {
+        $task = Task::find($task_id);
+        if ($task) {
+            Task::whereNull('user_id')->where('position', $task->position + 1)->where('checklist_id', $task->checklist_id)->update(['position' => $task->position]);
+            $task->update(['position' => $task->position + 1]);
+        }
+    }
+
     public function render()
     {
-        $tasks = $this->checklist->tasks()->orderBy('position', 'asc')->paginate(5);
+        $tasks = $this->checklist->tasks()->where('user_id', NULL)->orderBy('position', 'asc')->paginate(5);
         return view('livewire.tasks-table', compact('tasks'));
     }
 }

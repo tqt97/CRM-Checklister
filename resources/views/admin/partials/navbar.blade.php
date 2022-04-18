@@ -33,7 +33,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">
+            <a href="{{ route('welcome') }}" class="nav-link">
                 <i class="fas fa-home"></i>
                 Welcome
             </a>
@@ -83,11 +83,11 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="{{ route('welcome') }}">
                     <i class="fas fa-chart-area mr-1"></i>
-                    Welcome
+                    {{ __('Welcome') }}
                 </a>
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-user-alt mr-1"></i>
-                    Edit Profile
+                    {{ __('Profile') }}
                 </a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">

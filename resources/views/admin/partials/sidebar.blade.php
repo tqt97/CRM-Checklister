@@ -13,7 +13,7 @@
                 <a href="{{ route('welcome') }}" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
-        <div class="form-inline nav-flat">
+        <div class="form-inline nav-flat1">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="w-100 form-control form-control-sidebar" type="search" placeholder="Search"
                     aria-label="Search">
@@ -25,34 +25,33 @@
             </div>
         </div>
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent" data-widget="treeview"
+            <ul class="nav nav-pills nav-sidebar flex-column nav-flat1 nav-child-indent1" data-widget="treeview"
                 role="menu" data-accordion="false">
                 @if (auth()->user()->is_admin)
                     <li class="nav-header"> {{ __(' Manage Checklists') }} </li>
-                    @foreach (\App\Models\ChecklistGroup::with('checklists')->get() as $group)
+                    @foreach ($admin_menu as $group)
                         <li class="nav-item menu-open">
                             <a href="{{ route('admin.checklist_groups.edit', $group->id) }}" class="nav-link">
                                 <i class="nav-icon fas fa-layer-group"></i>
-                                {{-- <i class="nav-icon fas fa-list"></i> --}}
                                 <p>
                                     {{ $group->name }}
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                         </li>
-                        {{-- <ul class="nav-item nav-treeview1"> --}}
+                        {{-- <ul class="nav-itemnav-treeview1"> --}}
                         @foreach ($group->checklists as $checklist)
-                            <li class="nav-item ml-2">
+                            <li class="nav-item">
                                 <a href="{{ route('admin.checklist_groups.checklists.edit', [$group, $checklist]) }}"
-                                    class="nav-link">
+                                    class="nav-link ">
                                     <i class="nav-icon fas fa-list fa-small"></i>
                                     <p>{{ $checklist->name }}</p>
                                 </a>
                             </li>
                         @endforeach
-                        <li class="nav-item ml-2">
+                        <li class="nav-item">
                             <a href="{{ route('admin.checklist_groups.checklists.create', $group) }}"
-                                class="nav-link">
+                                class="nav-link ">
                                 <i class="nav-icon fas fa-plus-circle fa-small"></i>
                                 <p> {{ __('New checklist') }} </p>
                             </a>
@@ -86,18 +85,37 @@
                         </a>
                     </li>
                 @else
-                    @foreach (\App\Models\ChecklistGroup::with([
-                                'checklists' => function ($query) {
-                                    $query->whereNull('user_id');
-                                },
-                            ])->get()
-                            as $group)
-                        <li class="nav-header"> {{ $group->name }} </li>
-                        @foreach ($group->checklists as $checklist)
-                            <li class="nav-item ml-2">
-                                <a href="{{ route('user.checklists.show', [$checklist]) }}" class="nav-link">
+                    @foreach ($user_menu as $group)
+                        <li class="nav-header">
+                            <i class="fas fa-layer-group mr-1"></i>
+                            {{ $group['name'] }}
+                            {{-- <span class="badge badge-info right">2</span> --}}
+                            @if ($group['is_new'])
+                                <span class="right badge badge-danger">{{ __('New') }}</span>
+                            @elseif($group['is_updated'])
+                                <span class="right badge badge-info">{{ __('Updated') }}</span>
+                            @endif
+                        </li>
+                        @foreach ($group['checklists'] as $checklist)
+                            <li class="nav-item">
+                                <a href="{{ route('user.checklists.show', [$checklist['id']]) }}"
+                                    class="nav-link">
                                     <i class="nav-icon fas fa-list fa-small"></i>
-                                    <p>{{ $checklist->name }}</p>
+                                    <p>{{ $checklist['name'] }}</p>
+
+                                    @livewire('completed-task-counter',[
+                                    'completed_tasks' => count($checklist['user_tasks']),
+                                    'tasks_count' => count($checklist['tasks']),
+                                    'checklist_id' => $checklist['id']
+                                    ])
+
+                                    @if ($checklist['is_new'])
+                                        <span class="right badge badge-danger">{{ __('New') }}</span>
+                                    @elseif($checklist['is_updated'])
+                                        <span class="right badge badge-info">{{ __('Updated') }}</span>
+                                    @endif
+                                    {{-- {{ $checklist['is_new'] ? __('New') : '' }}
+                                            {{ $checklist['is_updated'] ? __('Updated') : '' }} --}}
                                 </a>
                             </li>
                         @endforeach

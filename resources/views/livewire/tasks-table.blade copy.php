@@ -9,20 +9,11 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody wire:sortable="updateTaskOrder">
                 @foreach ($tasks as $index => $task)
-                    <tr>
-                        <td style="font-size: 1.2rem">
-                            @if ($task->position > 1)
-                                <a wire:click.prevent="task_up({{ $task->id }})" class="px-2" href="#">
-                                    &uarr;
-                                </a>
-                            @endif
-                            @if ($task->position < $tasks->max('position'))
-                                <a wire:click.prevent="task_down({{ $task->id }})" class="px-2" href="#">
-                                    &darr;
-                                </a>
-                            @endif
+                    <tr wire:key="task-{{ $task->id }}" wire:sortable.item="{{ $task->id }}">
+                        <td wire:sortable.handle style="width: 10px; cursor: move;">
+                            <i class="fa fa-arrows-alt text-muted"></i>
                         </td>
                         {{-- <td>{{ $tasks->firstItem() + $index }}</td> --}}
                         <td>{{ $task->name }}</td>

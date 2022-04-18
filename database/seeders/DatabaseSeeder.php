@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(UserSeeder::class);
         $this->call(PageSeeder::class);
-        \App\Models\ChecklistGroup::factory(5)->create();
-        \App\Models\Checklist::factory(10)->create();
+        // \App\Models\ChecklistGroup::factory(2)->create();
+        // \App\Models\Checklist::factory(4)->create();
 
     }
 }

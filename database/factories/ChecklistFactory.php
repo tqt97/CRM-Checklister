@@ -14,7 +14,7 @@ class ChecklistFactory extends Factory
     public function definition()
     {
         return [
-            'checklist_group_id' => $this->faker->numberBetween(1, 5),
+            'checklist_group_id' => $this->faker->numberBetween(1, 2),
             'name' => $this->faker->name,
         ];
     }

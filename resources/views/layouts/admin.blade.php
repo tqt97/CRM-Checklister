@@ -12,13 +12,13 @@
     @livewireStyles
     <style>
         .nav-sidebar .nav-header {
-            font-size: 1.05rem;
+            /* font-size: 1rem; */
             /* font-weight: bold; */
-            text-transform: uppercase;
-            color: #000;
-            background-color: #fff;
-            border-left: 4px solid;
-            border-left-color: #009921;
+            /* text-transform: uppercase; */
+            /* color: #000; */
+            background-color: #272b2f;
+            border-left: 3px solid;
+            border-left-color: #b7b7b7;
         }
 
         .fa-small {

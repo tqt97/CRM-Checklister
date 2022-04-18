@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-    @push('before-livewire-scripts')
+    {{-- @push('before-livewire-scripts')
         <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
         <script>
             ClassicEditor
@@ -52,5 +52,8 @@
                     console.error(error);
                 });
         </script>
+    @endpush --}}
+    @push('before-livewire-scripts')
+        @include('admin.partials.ckeditor')
     @endpush
 </x-admin-layout>

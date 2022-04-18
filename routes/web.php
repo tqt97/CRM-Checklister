@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ChecklistController;
 use App\Http\Controllers\Admin\ChecklistGroupController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
@@ -10,13 +11,12 @@ use App\Http\Controllers\User\ChecklistController as UserChecklistController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/',  'welcome');
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','save_last_action_timestamp']], function () {
+
 
     Route::get('welcome', [WelcomePageController::class, 'welcome'])->name('welcome');
     Route::get('consultation', [WelcomePageController::class, 'consultation'])->name('consultation');
@@ -35,5 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('pages', PageController::class)->only(['edit', 'update']);
 
         Route::resource('users', UserController::class);
+
+        Route::post('images', [ImageController::class, 'store'])->name('images.store');
+
     });
 });
